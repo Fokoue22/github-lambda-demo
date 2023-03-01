@@ -12,5 +12,6 @@ phases:
   post_build:
     commands:
       - echo "Updating lambda Function..."
-      - aws lambda update-function-code --function-name ec2-report-generator-lambdafunction 
+      - aws lambda update-function-code --function-name ec2-report-generator-lambdafunction --zip-file 
       - echo "DONE!!"
+
