@@ -19,8 +19,7 @@ logger = logging.getLogger()
 
 # global variable 
 FILE_NAME = '/tmp/' + 'ec2-report.csv'
-SLACK_TOKEN = 'xoxb-4796957867426-4852417593346-VuygW4wavH8zF7Kposz2QQff'
-BUCKET = 'fokouebucket'
+SLACK_TOKEN = 'xoxb-4796957867426-4840977388017-cRPhdZEEmveTCxt0oQDIIi8P'
 SNAPSHOT_NAME = 'snapshot_list'
 TERMINATE = 'statefilters'
 
@@ -45,7 +44,7 @@ def list_all_instances():
             print(my_list)
     return my_list
     
-schedule.every(10).seconds.do(list_all_instances)
+# schedule.every(10).seconds.do(list_all_instances)
     
     
 def create_snapshot():
@@ -76,7 +75,7 @@ def create_snapshot():
 
     )
 
-schedule.every(10).seconds.do(create_snapshot)
+# schedule.every(10).seconds.do(create_snapshot)
 
 
 def terminate_ec2():
@@ -100,7 +99,7 @@ def terminate_ec2():
 #          return False
 #    return True 
       
-schedule.every(10).seconds.do(terminate_ec2)
+# schedule.every(10).seconds.do(terminate_ec2)
 
 
 # The next step will be to generate the csv report functions
@@ -126,7 +125,7 @@ def generate_csv_report(instances):
         return False 
     return True # if the code work it will return TRUE
 
-schedule.every(10).seconds.do(generate_csv_report)
+# schedule.every(10).seconds.do(generate_csv_report)
 
 
 def send_email():
@@ -178,14 +177,14 @@ def send_email():
         return False
     return True
 
-schedule.every(10).seconds.do(send_email)
+# schedule.every(10).seconds.do(send_email)
 
 
 def send_slack_message():
     """
     This function will send a slack message to a particular slack channel
     text: this is the message that will be send to the slack channel 
-    
+
     """
 
    ## creating ebs Snapshot that only create snapshot for stopped ec2 instance
@@ -195,7 +194,7 @@ def send_slack_message():
     client = slack.WebClient(token= SLACK_TOKEN)
     client.chat_postMessage(channel="#general", text= (f'Hello sir,\n\n And Ec2 report was generated, it containe {FILE_NAME}\n\n{SNAPSHOT_NAME} and was send to this email:\n{EMAIL}\n\nThanks, \n\nFokoue Thomas!'))
     
-schedule.every(10).seconds.do(send_slack_message)
+# schedule.every(10).seconds.do(send_slack_message)
 
 
 def lambda_handler(event, context):
@@ -226,6 +225,6 @@ def lambda_handler(event, context):
         'body': json.dumps('Our ec2-generator lambda function was generated succesfully!!!')
     }
 
-while True:
-        schedule.run_pending()
-        time.sleep(1)
+# while True:
+#         schedule.run_pending()
+#         time.sleep(1)
