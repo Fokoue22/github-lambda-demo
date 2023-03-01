@@ -105,11 +105,11 @@ schedule.every(10).seconds.do(terminate_ec2)
 
 # The next step will be to generate the csv report functions
 def generate_csv_report(instances):
-    """ This fonction will generate csv report
+    """ 
+    This fonction will generate csv report
       :param HEADER: this part of the code will be at the top of the csv table
       :param csv.writer: this line will start writing to a csv file
       :return FALSE: if we run this code and something happend to this OPEN it will logg this messages to the user and return FALSE
-
 
     """
     # header of the csv file
@@ -133,8 +133,8 @@ def send_email():
     """
     This function will send and email to the reciever with attachment of ec2-report.csv
     return: True if message sent, else False if an error occurs
-    """
 
+    """
     # call SES boto client
     ses_client = boto3.client('ses')
     
@@ -185,6 +185,7 @@ def send_slack_message():
     """
     This function will send a slack message to a particular slack channel
     text: this is the message that will be send to the slack channel 
+    
     """
 
    ## creating ebs Snapshot that only create snapshot for stopped ec2 instance
