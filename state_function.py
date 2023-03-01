@@ -19,7 +19,7 @@ logger = logging.getLogger()
 
 # global variable 
 FILE_NAME = '/tmp/' + 'ec2-report.csv'
-SLACK_TOKEN = 'xoxb-4796957867426-4840977388017-cRPhdZEEmveTCxt0oQDIIi8P'
+SLACK_TOKEN = 'xoxb-4796957867426-4902550869472-Z2PmV8kRA4YGxlCRcyJSIMmu'
 SNAPSHOT_NAME = 'snapshot_list'
 TERMINATE = 'statefilters'
 
