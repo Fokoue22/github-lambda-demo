@@ -25,6 +25,10 @@ SNAPSHOT_NAME = 'snapshot_list'
 TERMINATE = 'statefilters'
 
 def list_all_instances():
+    """
+    This function will list all ec2 instance present in our aws account.
+    It will store only the information ask to him 
+    """
 
     ec2_client = boto3.client('ec2')
     response = ec2_client.describe_instances()
@@ -41,10 +45,14 @@ def list_all_instances():
             print(my_list)
     return my_list
     
-schedule.every().day.at("10:46").do(list_all_instances)
+schedule.every(10).seconds.do(list_all_instances)
     
     
 def create_snapshot():
+    """
+    This function will create snapshot of only stopped ec2 in a particular region end point 
+    and will send sns to the user  
+    """
     ec2 = boto3.resource('ec2', region_name = 'us-east-1')
     sns_client= boto3.client('sns')
 
@@ -68,10 +76,13 @@ def create_snapshot():
 
     )
 
-schedule.every().day.at("10:46").do(create_snapshot)
+schedule.every(10).seconds.do(create_snapshot)
 
 
 def terminate_ec2():
+   """
+    This function will terminated only stopped ec2 instance 
+    """
    #call the boto client
    ec2 = boto3.resource('ec2', region_name = 'us-east-1')
    statefilters=[{'Name': 'instance-state-name', 'Values': ['stopped']}]
@@ -89,7 +100,7 @@ def terminate_ec2():
 #          return False
 #    return True 
       
-schedule.every().day.at("10:46").do(terminate_ec2)
+schedule.every(10).seconds.do(terminate_ec2)
 
 
 # The next step will be to generate the csv report functions
@@ -115,7 +126,7 @@ def generate_csv_report(instances):
         return False 
     return True # if the code work it will return TRUE
 
-schedule.every().day.at("10:46").do(generate_csv_report)
+schedule.every(10).seconds.do(generate_csv_report)
 
 
 def send_email():
@@ -167,10 +178,14 @@ def send_email():
         return False
     return True
 
-schedule.every().day.at("10:46").do(send_email)
+schedule.every(10).seconds.do(send_email)
 
 
 def send_slack_message():
+    """
+    This function will send a slack message to a particular slack channel
+    text: this is the message that will be send to the slack channel 
+    """
 
    ## creating ebs Snapshot that only create snapshot for stopped ec2 instance
     EMAIL = 'willcabrel735@gmail.com'
@@ -179,7 +194,7 @@ def send_slack_message():
     client = slack.WebClient(token= SLACK_TOKEN)
     client.chat_postMessage(channel="#general", text= (f'Hello sir,\n\n And Ec2 report was generated, it containe {FILE_NAME}\n\n{SNAPSHOT_NAME} and was send to this email:\n{EMAIL}\n\nThanks, \n\nFokoue Thomas!'))
     
-schedule.every().day.at("10:46").do(send_slack_message)
+schedule.every(10).seconds.do(send_slack_message)
 
 
 def lambda_handler(event, context):
