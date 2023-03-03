@@ -189,7 +189,7 @@ def send_slack_message():
     text: this is the message that will be send to the slack channel 
 
     """
-    NAME = 'http://localhost:port/systemsmanager/parameters/get?name=SLACK_TOKEN'
+    NAME = 'http://localhost:2773/systemsmanager/parameters/get?name=SLACK_TOKEN'
    ## creating ebs Snapshot that only create snapshot for stopped ec2 instance
     EMAIL = 'willcabrel735@gmail.com'
     # env_path = Path('.') / '.env'
