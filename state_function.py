@@ -21,7 +21,7 @@ logger = logging.getLogger()
 
 # global variable 
 FILE_NAME = '/tmp/' + 'ec2-report.csv'
-# SLACK_TOKEN = 'xoxb-4796957867426-4878973368866-Jb6J1YXtqtfHMP3JMQrn3j1u'
+# SLACK_TOKEN = 'xoxb-4796957867426-4891840681732-JehfmIPVnD3LpCY6DQATBTvY'
 SNAPSHOT_NAME = 'snapshot_list'
 TERMINATE = 'statefilters'
 
@@ -191,8 +191,8 @@ def send_slack_message():
 
    ## creating ebs Snapshot that only create snapshot for stopped ec2 instance
     EMAIL = 'willcabrel735@gmail.com'
-    env_path = Path('.') / '.env'
-    load_dotenv(dotenv_path = env_path)
+    # env_path = Path('.') / '.env'
+    # load_dotenv(dotenv_path = env_path)
     client = slack.WebClient(token=os.environ['SLACK_TOKEN'])
     client.chat_postMessage(channel="#general", text= (f'Hello sir,\n\n And Ec2 report was generated, it containe {FILE_NAME}\n\n{SNAPSHOT_NAME} and was send to this email:\n{EMAIL}\n\nThanks, \n\nFokoue Thomas!'))
     
