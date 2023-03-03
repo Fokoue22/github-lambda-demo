@@ -21,7 +21,6 @@ logger = logging.getLogger()
 
 # global variable 
 FILE_NAME = '/tmp/' + 'ec2-report.csv'
-# SLACK_TOKEN = 'xoxb-4796957867426-4891840681732-JehfmIPVnD3LpCY6DQATBTvY'
 SNAPSHOT_NAME = 'snapshot_list'
 TERMINATE = 'statefilters'
 
@@ -94,13 +93,6 @@ def terminate_ec2():
    #this code will print the image id of all ec2 that was terminated
       instances = ec2.instances.filter(Filters=[{'Name': 'instance-state-name', 'Values': ['terminated']}])
       print(instance['TerminatingInstances'])
-
-#    try:
-#          instances = ec2.instances.filter()
-#    except ClientError as error:
-#          logging.error(f'An error occurred try to read the error messages:{error}')
-#          return False
-#    return True 
       
 # schedule.every(10).seconds.do(terminate_ec2)
 
@@ -190,7 +182,7 @@ def send_slack_message():
 
     """
     # NAME = 'http://localhost:2773/systemsmanager/parameters/get?name=SLACK_TOKEN'
-   ## creating ebs Snapshot that only create snapshot for stopped ec2 instance
+    # creating ebs Snapshot that only create snapshot for stopped ec2 instance
     EMAIL = 'willcabrel735@gmail.com'
     # env_path = Path('.') / '.env'
     # load_dotenv(dotenv_path = env_path)
