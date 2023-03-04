@@ -4,8 +4,6 @@ import logging
 import slack  
 import os 
 import csv
-import schedule
-import time
 from pathlib import Path 
 from dotenv import load_dotenv 
 from botocore.exceptions import ClientError
@@ -46,7 +44,6 @@ def list_all_instances():
             print(my_list)
     return my_list
     
-# schedule.every(10).seconds.do(list_all_instances)
     
     
 def create_snapshot():
@@ -77,7 +74,6 @@ def create_snapshot():
 
     )
 
-# schedule.every(10).seconds.do(create_snapshot)
 
 
 def terminate_ec2():
@@ -94,7 +90,6 @@ def terminate_ec2():
       instances = ec2.instances.filter(Filters=[{'Name': 'instance-state-name', 'Values': ['terminated']}])
       print(instance['TerminatingInstances'])
       
-# schedule.every(10).seconds.do(terminate_ec2)
 
 
 # The next step will be to generate the csv report functions
@@ -120,7 +115,6 @@ def generate_csv_report(instances):
         return False 
     return True # if the code work it will return TRUE
 
-# schedule.every(10).seconds.do(generate_csv_report)
 
 
 def send_email():
@@ -172,7 +166,6 @@ def send_email():
         return False
     return True
 
-# schedule.every(10).seconds.do(send_email)
 
 
 def send_slack_message():
@@ -181,15 +174,10 @@ def send_slack_message():
     text: this is the message that will be send to the slack channel 
 
     """
-    # NAME = 'http://localhost:2773/systemsmanager/parameters/get?name=SLACK_TOKEN'
-    # creating ebs Snapshot that only create snapshot for stopped ec2 instance
     EMAIL = 'willcabrel735@gmail.com'
-    # env_path = Path('.') / '.env'
-    # load_dotenv(dotenv_path = env_path)
     client = slack.WebClient(token=os.environ['SLACK_TOKEN'])
     client.chat_postMessage(channel="#general", text= (f'Hello sir,\n\n And Ec2 report was generated, it containe {FILE_NAME}\n\n{SNAPSHOT_NAME} and was send to this email:\n{EMAIL}\n\nThanks, \n\nFokoue Thomas!'))
     
-# schedule.every(10).seconds.do(send_slack_message)
 
 
 def lambda_handler(event, context):
@@ -220,6 +208,3 @@ def lambda_handler(event, context):
         'body': json.dumps('Our ec2-generator lambda function was generated succesfully!!!')
     }
 
-# while True:
-#         schedule.run_pending()
-#         time.sleep(1)
